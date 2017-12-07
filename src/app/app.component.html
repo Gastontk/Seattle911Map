@@ -1,0 +1,25 @@
+<h1>911 Map</h1>
+<button class="btn btn-primary" (click) = 'onSubmitToGoogle()'>Submit City for info from GoogleMaps</button>
+
+<h3>Number of positions: {{positions.length}}</h3>
+<h3>Number of Addresses: {{addresses.length}}</h3>
+
+
+
+<ngui-map 
+  style = 'height:800px;widtht:100px;'
+  zoom="11" 
+  center="47.65, -122.3321" 
+  (mapReady$)="onMapReady($event)"
+  (mapClick)="onMapClick($event)"
+  (idle)="onIdle($event)"
+  mapTypeId='ROADMAP'>
+    <marker *ngFor="let pos of positions" 
+      [position]="pos"
+      (initialized$)="onMarkerInit($event)"></marker>
+</ngui-map>
+
+<!-- <div innerHTML="{{htmlBody}}"></div> -->
+<ul>
+  <li *ngFor = 'let add of addresses'>{{add}}</li>
+</ul>
