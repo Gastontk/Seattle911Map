@@ -1,25 +1,45 @@
-<h1>911 Map</h1>
-<button class="btn btn-primary" (click) = 'onSubmitToGoogle()'>Submit City for info from GoogleMaps</button>
+ <div class="container"> 
+  <h1>Map of Today's Seattle 911 Fire/Medical calls</h1>
+  <!-- <button class="btn btn-primary" (click) = 'onSubmitToGoogle()'>Submit City for info from GoogleMaps</button> -->
+  <div class="row">
+    <div class="col col-md-8">
+      {{positions.length}} of {{addresses.length}} mapped
+          <ngui-map 
+          class = 'img-responsive  '
+          style = 'height:800px;widtht:100px;'
+          zoom="11" 
+          center="47.65, -122.3321" 
+          (mapReady$)="onMapReady($event)"
+          
+          (idle)="onIdle($event)"
+          mapTypeId='ROADMAP'>
+            <marker *ngFor="let pos of positions;" 
+              [position]="pos"
+              (initialized$)="onMarkerInit($event)"></marker>
+        </ngui-map>
 
-<h3>Number of positions: {{positions.length}}</h3>
-<h3>Number of Addresses: {{addresses.length}}</h3>
+    </div>
 
 
 
-<ngui-map 
-  style = 'height:800px;widtht:100px;'
-  zoom="11" 
-  center="47.65, -122.3321" 
-  (mapReady$)="onMapReady($event)"
-  (mapClick)="onMapClick($event)"
-  (idle)="onIdle($event)"
-  mapTypeId='ROADMAP'>
-    <marker *ngFor="let pos of positions" 
-      [position]="pos"
-      (initialized$)="onMarkerInit($event)"></marker>
-</ngui-map>
 
-<!-- <div innerHTML="{{htmlBody}}"></div> -->
-<ul>
-  <li *ngFor = 'let add of addresses'>{{add}}</li>
-</ul>
+    <div class="col col-md-4">
+      <p style = 'border:solid black 1px;height: 50px;padding: 5px;'>{{message}}</p>
+     <!--  <h3>Number of Addresses Mapped: {{positions.length}}</h3>
+      <h3>Number of Addresses: {{addresses.length}}</h3>
+ -->
+      <ul>
+       <a (click) = "onclickAddress(i)" *ngFor = 'let add of addresses; let i = index'> <li >{{add}}</li></a>
+      </ul>
+    </div>
+
+    
+  </div>
+
+
+  <!-- <div innerHTML="{{htmlBody}}"></div> -->
+
+</div>
+
+
+<!-- (mapClick)="onMapClick($event)" -->
